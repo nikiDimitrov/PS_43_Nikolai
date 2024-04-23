@@ -19,8 +19,8 @@ namespace Welcome.ViewModel
 
 		public string Name
 		{
-			get { return _user.Names; } 
-			set { _user.Names = value; }
+			get { return _user.Name; } 
+			set { _user.Name = value; }
 		}
 		public string Password 
 		{ 

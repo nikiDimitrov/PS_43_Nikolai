@@ -22,6 +22,11 @@ namespace Welcome.View
             Console.WriteLine($"Role: {_viewModel.Role}");
         }
 
+        public void Display2()
+        {
+            Console.WriteLine("Welcome!");
+            Console.WriteLine($"User: {_viewModel.Name}, Role: {_viewModel.Role}");
+        }
         public void DisplayError()
         {
             throw new Exception("Error");

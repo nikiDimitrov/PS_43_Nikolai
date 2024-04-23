@@ -18,25 +18,25 @@ namespace Welcome
 
             User studentUser = new User()
             {
-                Names = "student",
+                Name = "student",
                 Password = "123",
                 Role = UserRoleEnum.STUDENT
             };
             User student1User = new User()
             {
-                Names = "Student2",
+                Name = "Student2",
                 Password = "123",
                 Role = UserRoleEnum.STUDENT
             };
             User teacherUser = new User()
             {
-                Names = "Teacher",
+                Name = "Teacher",
                 Password = "1234",
                 Role = UserRoleEnum.PROFESSOR
             };
             User adminUser = new User()
             {
-                Names = "Admin",
+                Name = "Admin",
                 Password = "12345",
                 Role = UserRoleEnum.ADMIN
             };

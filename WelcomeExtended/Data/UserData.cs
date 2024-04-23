@@ -35,7 +35,7 @@ namespace WelcomeExtended.Data
         {
             foreach(var user in _users)
             {
-                if(user.Names == name && user.Password == password)
+                if(user.Name == name && user.Password == password)
                 {
                     return true;
                 }
@@ -45,37 +45,37 @@ namespace WelcomeExtended.Data
 
         public bool ValidateUserLambda(string name, string password)
         {
-            return _users.Where(x => x.Names == name && x.Password == password)
+            return _users.Where(x => x.Name == name && x.Password == password)
                 .FirstOrDefault() != null ? true : false;
         }
 
         public bool ValidateUserLinq(string name, string password)
         {
             var ret = from user in _users
-                      where user.Names == name && user.Password == password
+                      where user.Name == name && user.Password == password
                       select user.Id;
             return ret != null ? true : false;
         }
 
         public User? GetUser(string name, string password)
         {
-            return _users.Where(u => u.Names == name && u.Password == password).FirstOrDefault();
+            return _users.Where(u => u.Name == name && u.Password == password).FirstOrDefault();
         }
 
         public void SetActive(string name, DateTime expires)
         {
-            User user = _users.Where(u => u.Names == name).FirstOrDefault();
+            User user = _users.Where(u => u.Name == name).FirstOrDefault();
             user.Expires = expires;
-            int index = _users.FindIndex(u => u.Names == name);
+            int index = _users.FindIndex(u => u.Name == name);
 
             _users[index] = user;
         }
 
         public void AssignUserRole(string name, UserRoleEnum role)
         {
-            User user = _users.Where(u => u.Names == name).FirstOrDefault();
+            User user = _users.Where(u => u.Name == name).FirstOrDefault();
             user.Role = role;
-            int index = _users.FindIndex(u => u.Names == name);
+            int index = _users.FindIndex(u => u.Name == name);
 
             _users[index] = user;
         }

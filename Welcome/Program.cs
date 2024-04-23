@@ -10,7 +10,7 @@ namespace Welcome
         static void Main(string[] args)
         {
             User user = new User();
-            user.Names = "Nikolai Dimitrov";
+            user.Name = "Nikolai Dimitrov";
             user.Password = "123456789";
             user.Role = UserRoleEnum.ADMIN;
 
