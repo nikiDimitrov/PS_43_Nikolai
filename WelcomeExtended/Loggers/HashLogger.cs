@@ -57,5 +57,30 @@ namespace WelcomeExtended.Loggers
             Console.ResetColor();
             _logMessages[eventId.Id] = message;
         }
+
+        public void PrintAllLogMsgs()
+        {
+            foreach(var log in _logMessages)
+            {
+                Console.WriteLine($"Log ID: {log.Key}, Message: {log.Value}");
+            }
+        }
+
+        public void PrintLogMsgByID(int id)
+        {
+            foreach(var log in _logMessages)
+            {
+                if(log.Key.Equals(id))
+                {
+                    Console.WriteLine($"Log with ID {id} has Message: {log.Value}");
+                    break;
+                }
+            }
+        }
+
+        public bool DeleteLogMsgByID(int id)
+        {
+             return _logMessages.TryRemove(id, out _);
+        }
     }
 }
