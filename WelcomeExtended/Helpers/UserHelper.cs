@@ -14,25 +14,26 @@ namespace WelcomeExtended.Helpers
     {
         public static void ToString(this User user) { }
 
-        public static void ValidateCredentials(UserData userData, string name, string password)
+        public static int ValidateCredentials(UserData userData, string name, string password)
         {
             if(String.IsNullOrWhiteSpace(name))
             {
-                Console.WriteLine("Name cannot be empty!");
+                return 0;
             }
             else if(String.IsNullOrWhiteSpace(password))
             {
-                Console.WriteLine("Password cannot be empty!");
+                return 1;
             }
-            else
+            else if(!userData.ValidateUser(name, password))
             {
-                userData.ValidateUser(name, password);
+                return 2;
             }
+            return 3;
         }
 
-        public static void GetUser(UserData userData, string name, string password)
+        public static User? GetUser(UserData userData, string name, string password)
         {
-            userData.GetUser(name, password);
+            return userData.GetUser(name, password);
         }
 
     }

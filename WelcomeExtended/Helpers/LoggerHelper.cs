@@ -17,5 +17,9 @@ namespace WelcomeExtended.Helpers
 
             return loggerFactory.CreateLogger(categoryName);
         }
+        public static void NotSuccessfulLogin(ILogger log, int eventId, string message)
+        {
+            log.Log(LogLevel.Error, new EventId(eventId++), message, null, (state, exception) => state.ToString());
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Text;
 using Welcome.Others;
 
 namespace Welcome.Model
@@ -37,46 +38,57 @@ namespace Welcome.Model
 
                 byte[] encryptedBytes;
 
-                using (var msEncrypt = new System.IO.MemoryStream())
+                using (var msEncrypt = new MemoryStream())
                 {
                     using (var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                     {
-                        using (var swEncrypt = new System.IO.StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(password);
-                        }
+                        byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                        csEncrypt.Write(passwordBytes, 0, passwordBytes.Length);
+                        csEncrypt.FlushFinalBlock();
                         encryptedBytes = msEncrypt.ToArray();
                     }
                 }
 
-                return Convert.ToBase64String(encryptedBytes);
+                byte[] ivWithKey = new byte[rijAlg.IV.Length + rijAlg.Key.Length];
+                Array.Copy(rijAlg.IV, ivWithKey, rijAlg.IV.Length);
+                Array.Copy(rijAlg.Key, 0, ivWithKey, rijAlg.IV.Length, rijAlg.Key.Length);
+
+                return Convert.ToBase64String(ivWithKey.Concat(encryptedBytes).ToArray());
             }
         }
 
         private string DecryptPassword(string encryptedPassword)
         {
+            byte[] ivWithKeyAndCipherText = Convert.FromBase64String(encryptedPassword);
+
             using (RijndaelManaged rijAlg = new RijndaelManaged())
             {
-                byte[] cipherText = Convert.FromBase64String(encryptedPassword);
+                byte[] iv = new byte[rijAlg.IV.Length];
+                byte[] key = new byte[rijAlg.Key.Length];
+                byte[] cipherText = new byte[ivWithKeyAndCipherText.Length - (iv.Length + key.Length)];
+
+                Array.Copy(ivWithKeyAndCipherText, iv, iv.Length);
+                Array.Copy(ivWithKeyAndCipherText, iv.Length, key, 0, key.Length);
+                Array.Copy(ivWithKeyAndCipherText, iv.Length + key.Length, cipherText, 0, cipherText.Length);
+
+                rijAlg.Key = key;
+                rijAlg.IV = iv;
 
                 ICryptoTransform decryptor = rijAlg.CreateDecryptor(rijAlg.Key, rijAlg.IV);
 
-                string decryptedPassword;
-
-                using (var msDecrypt = new System.IO.MemoryStream(cipherText))
+                using (var msDecrypt = new MemoryStream(cipherText))
                 {
                     using (var csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
-                        using (var srDecrypt = new System.IO.StreamReader(csDecrypt))
+                        using (var srDecrypt = new StreamReader(csDecrypt))
                         {
-                            decryptedPassword = srDecrypt.ReadToEnd();
+                            return srDecrypt.ReadToEnd();
                         }
                     }
                 }
-
-                return decryptedPassword;
             }
         }
+
     }
 }
 

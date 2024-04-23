@@ -6,14 +6,19 @@ using System.Linq.Expressions;
 using WelcomeExtended.Others;
 using WelcomeExtended.Data;
 using WelcomeExtended.Helpers;
+using WelcomeExtended.Loggers;
+using Microsoft.Extensions.Logging;
 
 namespace Welcome
 {
     using static Delegates;
     internal class Program
     {
+        private static int eventId = 0;
         static void Main(string[] args)
         {
+            FileLogger successfullyLoggedUsers = new FileLogger("successfullyLogged.txt");
+            FileLogger loggingFailedUsers = new FileLogger("notSuccessfullyLogged.txt");
             UserData userData = new UserData();
 
             User studentUser = new User()
@@ -50,7 +55,25 @@ namespace Welcome
             Console.WriteLine("Enter password: ");
             string password = Console.ReadLine();
 
-            UserHelper.ValidateCredentials(userData, name, password);
+            int result = UserHelper.ValidateCredentials(userData, name, password);
+            switch(result)
+            {
+                case 0:
+                    LoggerHelper.NotSuccessfulLogin(loggingFailedUsers, eventId++, "Name cannot be empty!");
+                    break;
+                case 1:
+                    LoggerHelper.NotSuccessfulLogin(loggingFailedUsers, eventId++, "Password cannot be empty!");
+                    break;
+                case 2:
+                    LoggerHelper.NotSuccessfulLogin(loggingFailedUsers, eventId++, "Name or password are incorrect!");
+                    break;
+                case 3:
+                    User user = UserHelper.GetUser(userData, name, password);
+                    successfullyLoggedUsers.Log(LogLevel.Information, $"{user.Name} succesfully logged!");
+                    Console.WriteLine($"{user.Name} succesfully logged!");
+                    break;
+            }
+
         }
     }
 }
