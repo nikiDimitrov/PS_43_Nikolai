@@ -6,8 +6,9 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Welcome.Model;
 
-namespace Welcome.Model
+namespace DataLayer.Model
 {
     public class DatabaseUser : User
     {

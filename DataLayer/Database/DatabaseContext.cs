@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataLayer.Model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 using Welcome.Model;
 using Welcome.Others;
 
-namespace Welcome.Database
+namespace DataLayer.Database
 {
     public class DatabaseContext : DbContext
     {

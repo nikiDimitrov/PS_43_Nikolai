@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Welcome.Model;
+using DataLayer.Model;
 
-namespace Welcome.Database
+namespace DataLayer.Database
 {
     public class LoggerToDatabase
     {

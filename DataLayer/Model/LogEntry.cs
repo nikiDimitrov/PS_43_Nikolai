@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Welcome.Model
+namespace DataLayer.Model
 {
     public class LogEntry
     {

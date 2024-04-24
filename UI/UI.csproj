@@ -12,8 +12,4 @@
     <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extras\" />
-  </ItemGroup>
-
 </Project>

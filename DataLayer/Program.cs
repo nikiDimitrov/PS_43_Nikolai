@@ -2,7 +2,8 @@
 using Welcome.View;
 using Welcome.ViewModel;
 using Welcome.Others;
-using Welcome.Database;
+using DataLayer.Database;
+using DataLayer.Model;
 namespace Welcome
 {
     internal class Program
