@@ -27,7 +27,6 @@ namespace UI.Components
 
             using (var context = new DatabaseContext())
             {
-                context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
                 var records = context.Users.ToList();
                 students.DataContext = records;

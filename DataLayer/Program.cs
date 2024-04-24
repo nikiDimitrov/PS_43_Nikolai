@@ -12,10 +12,7 @@ namespace Welcome
         {
             using (var context = new DatabaseContext())
             {
-                context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-
-
 
                 var logger = new LoggerToDatabase(context);
                 bool exit = false;

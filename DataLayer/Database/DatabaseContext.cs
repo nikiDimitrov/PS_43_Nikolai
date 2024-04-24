@@ -25,8 +25,6 @@ namespace DataLayer.Database
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<DatabaseUser>().HasKey(u => u.Id);
-            modelBuilder.Entity<DatabaseUser>().Property(u => u.Id).ValueGeneratedOnAdd();
         }
     }
 }
